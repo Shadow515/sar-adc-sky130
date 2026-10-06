@@ -5,7 +5,7 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 ## Progress
 - [x] CMOS inverter: schematic, simulation, layout, DRC clean, LVS clean
 - [x] Comparator: design, corners, Monte Carlo offset, layout, DRC and LVS clean
-- [ ] Capacitor DAC
+- [x] Capacitor DAC: 256 MIM caps + 35 switch cells, mismatch MC, settling, layout, DRC and LVS clean
 - [ ] SAR logic (Verilog)
 - [ ] Top-level integration
 
@@ -42,3 +42,11 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 
 ### 8-bit CDAC capacitor array (256 unit MIM caps, common-centroid)
 ![CDAC array layout](images/cdac_array.png)
+
+## Capacitor DAC (8-bit, binary-weighted, 2x2 um MIM unit caps)
+| Spec | Result |
+|---|---|
+| Bit weights | exact binary, 7.03 mV / LSB at 1.8 V |
+| Mismatch (30-run Monte Carlo) | avg worst DNL 0.25 LSB, max 0.62 LSB, no missing codes |
+| Switch settling | ~1 ns to 1/2 LSB, step error < 0.25 LSB |
+| Layout | 256 caps common-centroid + 35 unit switch cells, DRC and LVS clean |

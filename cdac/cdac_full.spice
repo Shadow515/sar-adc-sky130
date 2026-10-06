@@ -1,0 +1,41 @@
+* Full CDAC reference: capacitor array + 35 unit switches
+.include cdac.spice
+.include bsw_unit.spice
+.subckt cdac_full top b0 b1 b2 b3 b4 b5 b6 b7 bd vin vref s sb VDD GND p0 p1 p2 p3 p4 p5 p6 p7 pd n0 n1 n2 n3 n4 n5 n6 n7 nd
+Xdac top b0 b1 b2 b3 b4 b5 b6 b7 bd cdac
+XSW_7_1 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_2 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_3 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_4 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_5 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_6 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_7 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_8 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_9 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_10 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_11 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_12 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_13 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_14 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_15 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_7_16 b7 vin vref p7 n7 s sb VDD GND bsw_unit
+XSW_6_1 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_2 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_3 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_4 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_5 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_6 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_7 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_6_8 b6 vin vref p6 n6 s sb VDD GND bsw_unit
+XSW_5_1 b5 vin vref p5 n5 s sb VDD GND bsw_unit
+XSW_5_2 b5 vin vref p5 n5 s sb VDD GND bsw_unit
+XSW_5_3 b5 vin vref p5 n5 s sb VDD GND bsw_unit
+XSW_5_4 b5 vin vref p5 n5 s sb VDD GND bsw_unit
+XSW_4_1 b4 vin vref p4 n4 s sb VDD GND bsw_unit
+XSW_4_2 b4 vin vref p4 n4 s sb VDD GND bsw_unit
+XSW_3_1 b3 vin vref p3 n3 s sb VDD GND bsw_unit
+XSW_2_1 b2 vin vref p2 n2 s sb VDD GND bsw_unit
+XSW_1_1 b1 vin vref p1 n1 s sb VDD GND bsw_unit
+XSW_0_1 b0 vin vref p0 n0 s sb VDD GND bsw_unit
+XSW_d_1 bd vin vref pd nd s sb VDD GND bsw_unit
+.ends

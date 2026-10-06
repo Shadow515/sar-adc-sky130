@@ -1,0 +1,109 @@
+
+Circuit 1 cell sky130_fd_pr__nfet_01v8 and Circuit 2 cell sky130_fd_pr__nfet_01v8 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__nfet_01v8         |Circuit 2: sky130_fd_pr__nfet_01v8         
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__nfet_01v8 and sky130_fd_pr__nfet_01v8 are equivalent.
+
+Circuit 1 cell sky130_fd_pr__pfet_01v8 and Circuit 2 cell sky130_fd_pr__pfet_01v8 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__pfet_01v8 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__pfet_01v8 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__pfet_01v8         |Circuit 2: sky130_fd_pr__pfet_01v8         
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__pfet_01v8 and sky130_fd_pr__pfet_01v8 are equivalent.
+
+Circuit 1 cell sky130_fd_pr__cap_mim_m3_1 and Circuit 2 cell sky130_fd_pr__cap_mim_m3_1 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__cap_mim_m3_1 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__cap_mim_m3_1 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__cap_mim_m3_1      |Circuit 2: sky130_fd_pr__cap_mim_m3_1      
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__cap_mim_m3_1 and sky130_fd_pr__cap_mim_m3_1 are equivalent.
+Flattening unmatched subcell swunit in circuit cdac_full (0)(35 instances)
+Flattening unmatched subcell sky130_fd_pr__nfet_01v8_PHAC7Z in circuit cdac_full (0)(70 instances)
+Flattening unmatched subcell sky130_fd_pr__pfet_01v8_7HN6Y2 in circuit cdac_full (0)(70 instances)
+Flattening unmatched subcell cdac_array in circuit cdac_full (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__cap_mim_m3_1_4V3HYR in circuit cdac_full (0)(256 instances)
+Flattening unmatched subcell cdac in circuit cdac_full (1)(1 instance)
+Flattening unmatched subcell bsw_unit in circuit cdac_full (1)(35 instances)
+
+Class cdac_full (0):  Merged 351 parallel devices.
+Class cdac_full (1):  Merged 104 parallel devices.
+Subcircuit summary:
+Circuit 1: cdac_full                       |Circuit 2: cdac_full                       
+-------------------------------------------|-------------------------------------------
+sky130_fd_pr__nfet_01v8 (70->18)           |sky130_fd_pr__nfet_01v8 (70->18)           
+sky130_fd_pr__pfet_01v8 (70->18)           |sky130_fd_pr__pfet_01v8 (70->18)           
+sky130_fd_pr__cap_mim_m3_1 (256->9)        |sky130_fd_pr__cap_mim_m3_1 (256->9)        
+Number of devices: 45                      |Number of devices: 45                      
+Number of nets: 34                         |Number of nets: 34                         
+---------------------------------------------------------------------------------------
+Resolving symmetries by property value.
+Resolving symmetries by pin name.
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: cdac_full                       |Circuit 2: cdac_full                       
+-------------------------------------------|-------------------------------------------
+b1                                         |b1                                         
+b2                                         |b2                                         
+b3                                         |b3                                         
+b4                                         |b4                                         
+b5                                         |b5                                         
+b6                                         |b6                                         
+b7                                         |b7                                         
+bd                                         |bd                                         
+b0                                         |b0                                         
+vin                                        |vin                                        
+VDD                                        |VDD                                        
+GND                                        |GND                                        
+p7                                         |p7                                         
+p6                                         |p6                                         
+p5                                         |p5                                         
+p4                                         |p4                                         
+pd                                         |pd                                         
+p0                                         |p0                                         
+p2                                         |p2                                         
+p1                                         |p1                                         
+p3                                         |p3                                         
+n7                                         |n7                                         
+n6                                         |n6                                         
+n5                                         |n5                                         
+n4                                         |n4                                         
+nd                                         |nd                                         
+n0                                         |n0                                         
+n2                                         |n2                                         
+n1                                         |n1                                         
+n3                                         |n3                                         
+top                                        |top                                        
+vref                                       |vref                                       
+s                                          |s                                          
+sb                                         |sb                                         
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes cdac_full and cdac_full are equivalent.
+
+Final result: Circuits match uniquely.
+.
