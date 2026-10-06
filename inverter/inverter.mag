@@ -1,0 +1,34 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1791275157
+<< locali >>
+rect -40 1000 131 1120
+rect -40 200 131 320
+<< metal1 >>
+rect 129 1301 187 1368
+rect -40 1000 131 1120
+rect 185 872 250 1248
+rect 140 410 176 810
+rect 222 347 250 872
+rect -40 200 131 320
+rect 185 171 250 347
+rect 129 60 187 127
+use sky130_fd_pr__nfet_01v8_34VMYE  nmos1
+timestamp 1791274712
+transform 1 0 158 0 1 259
+box -211 -310 211 310
+use sky130_fd_pr__pfet_01v8_VJT448  pmos1
+timestamp 1791274967
+transform 1 0 158 0 1 1060
+box -211 -419 211 419
+<< labels >>
+rlabel metal1 150 600 166 620 0 in
+port 1 nsew
+rlabel metal1 230 600 242 620 0 out
+port 2 nsew
+rlabel metal1 -20 250 0 270 0 GND
+port 4 nsew
+rlabel metal1 -20 1050 0 1070 0 VDD
+port 3 nsew
+<< end >>
