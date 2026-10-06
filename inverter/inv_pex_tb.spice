@@ -1,0 +1,17 @@
+* Inverter post-layout delay test
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include inverter_pex.spice
+Xinv in out VDD 0 inverter
+V1 VDD 0 1.8
+V2 in 0 pulse(0 1.8 0 100p 100p 2n 4n)
+C1 out 0 1e-18
+.control
+foreach cl 1e-18 10e-15 50e-15
+  alter C1 = $cl
+  tran 10p 10n
+  echo "Load = $cl"
+  meas tran tphl trig v(in) val=0.9 rise=1 targ v(out) val=0.9 fall=1
+  meas tran tplh trig v(in) val=0.9 fall=1 targ v(out) val=0.9 rise=1
+end
+.endc
+.end

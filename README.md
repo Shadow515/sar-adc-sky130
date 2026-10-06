@@ -15,3 +15,10 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 | none | 20.0 ps | 24.7 ps | 22.4 ps |
 | 10 fF | 51.8 ps | 62.7 ps | 57.3 ps |
 | 50 fF | 136.6 ps | 180.8 ps | 158.7 ps |
+
+## Inverter post-layout (extracted with Magic, tt, 1.8 V)
+| Load | Schematic tpd | Post-layout tpd |
+|---|---|---|
+| none | 22.4 ps | 26.8 ps |
+| 10 fF | 57.3 ps | 55.9 ps |
+| 50 fF | 158.7 ps | 144.3 ps |
