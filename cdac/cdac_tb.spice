@@ -1,0 +1,23 @@
+* CDAC bit-weight test
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include cdac.spice
+Xdac top b0 b1 b2 b3 b4 b5 b6 b7 bd cdac
+Rleak top vcm 1e15
+Vcm vcm 0 0.9
+Vd bd 0 0
+V0 b0 0 pwl(0 0 1n 0 1.1n S0)
+V1 b1 0 pwl(0 0 1n 0 1.1n S1)
+V2 b2 0 pwl(0 0 1n 0 1.1n S2)
+V3 b3 0 pwl(0 0 1n 0 1.1n S3)
+V4 b4 0 pwl(0 0 1n 0 1.1n S4)
+V5 b5 0 pwl(0 0 1n 0 1.1n S5)
+V6 b6 0 pwl(0 0 1n 0 1.1n S6)
+V7 b7 0 pwl(0 0 1n 0 1.1n S7)
+.ic v(top)=0.9
+.control
+tran 10p 5n uic
+meas tran vt find v(top) at=4n
+let dv_mv = (vt-0.9)*1000
+print dv_mv
+.endc
+.end
