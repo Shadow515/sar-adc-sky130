@@ -4,7 +4,7 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 
 ## Progress
 - [x] CMOS inverter: schematic, simulation, layout, DRC clean, LVS clean
-- [ ] Comparator
+- [x] Comparator: design, corners, Monte Carlo offset, layout, DRC and LVS clean
 - [ ] Capacitor DAC
 - [ ] SAR logic (Verilog)
 - [ ] Top-level integration
@@ -22,3 +22,12 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 | none | 22.4 ps | 26.8 ps |
 | 10 fF | 57.3 ps | 55.9 ps |
 | 50 fF | 158.7 ps | 144.3 ps |
+
+## Comparator (StrongARM latch, tt, 1.8 V)
+| Spec | Result |
+|---|---|
+| Resolution | 1 mV, all 15 corners (-40 to 125 C) |
+| Offset sigma (30-run Monte Carlo) | 2.9 mV (11.8 mV before resizing input pair) |
+| Delay | 0.25 - 0.53 ns |
+| Power @ 100 MHz | 15.5 uW |
+| Layout | Symmetric, DRC clean, LVS clean |
