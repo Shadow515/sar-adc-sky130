@@ -31,3 +31,14 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 | Delay | 0.25 - 0.53 ns |
 | Power @ 100 MHz | 15.5 uW |
 | Layout | Symmetric, DRC clean, LVS clean |
+
+## Layouts (sky130, DRC and LVS clean)
+
+### CMOS inverter
+![Inverter layout](images/inverter.png)
+
+### StrongARM comparator
+![Comparator layout](images/comp.png)
+
+### 8-bit CDAC capacitor array (256 unit MIM caps, common-centroid)
+![CDAC array layout](images/cdac_array.png)
