@@ -1,0 +1,25 @@
+* Comparator test: 1 mV difference, both directions
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include comp.spice
+Xcomp clk inp inn outp outn VDD 0 comp
+Vdd VDD 0 1.8
+Vclk clk 0 pulse(0 1.8 1n 50p 50p 4.9n 10n)
+Vinn inn 0 0.9
+Vinp inp 0 pulse(0.901 0.899 10n 50p 50p 10n 20n)
+Cp outp 0 5f
+Cn outn 0 5f
+.control
+tran 5p 22n
+echo "--- Cycle 1: inp = 0.901 V > inn = 0.900 V (expect outp HIGH, outn LOW)"
+meas tran outp1 find v(outp) at=5n
+meas tran outn1 find v(outn) at=5n
+meas tran delay1 trig v(clk) val=0.9 rise=1 targ v(outn) val=0.9 fall=1
+echo "--- Cycle 2: inp = 0.899 V < inn = 0.900 V (expect outp LOW, outn HIGH)"
+meas tran outp2 find v(outp) at=15n
+meas tran outn2 find v(outn) at=15n
+meas tran delay2 trig v(clk) val=0.9 rise=2 targ v(outp) val=0.9 fall=1
+meas tran iavg avg i(Vdd) from=0 to=20n
+let power = -iavg*1.8
+print power
+.endc
+.end
