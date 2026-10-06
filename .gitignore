@@ -2,3 +2,5 @@
 *.raw
 *.log
 inverter/untitled.sch
+comparator/mc_run/
+comparator/run.spice
