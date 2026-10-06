@@ -1,0 +1,8 @@
+* Bottom-plate switch for one CDAC bit: to Vin (sampling), Vref or GND
+* transistor pins: drain gate source body
+.subckt bsw b vin vref p n s sb VDD GND Wn=0.5 Wp=1
+XMs1 b s  vin  GND sky130_fd_pr__nfet_01v8 L=0.15 W={Wn} nf=1
+XMs2 b sb vin  VDD sky130_fd_pr__pfet_01v8 L=0.15 W={Wp} nf=1
+XMp  b p  vref VDD sky130_fd_pr__pfet_01v8 L=0.15 W={Wp} nf=1
+XMn  b n  GND  GND sky130_fd_pr__nfet_01v8 L=0.15 W={Wn} nf=1
+.ends

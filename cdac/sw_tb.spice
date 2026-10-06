@@ -1,0 +1,53 @@
+* CDAC with real switches: sampling, MSB step, next-bit step
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include cdac.spice
+.include bsw.spice
+VDD VDD 0 1.8
+Vref vref 0 1.8
+Vcm vcm 0 0.9
+Vin vin 0 0.5
+* top-plate sampling switch (opens at 49 ns)
+XMt1 top st  vcm 0   sky130_fd_pr__nfet_01v8 L=0.15 W=4 nf=1
+XMt2 top stb vcm VDD sky130_fd_pr__pfet_01v8 L=0.15 W=8 nf=1
+Vst  st  0 pwl(0 1.8 49n 1.8 49.1n 0)
+Vstb stb 0 pwl(0 0 49n 0 49.1n 1.8)
+* bottom-plate sampling ends at 50 ns
+Vs  s  0 pwl(0 1.8 50n 1.8 50.1n 0)
+Vsb sb 0 pwl(0 0 50n 0 50.1n 1.8)
+* bit 7: to Vref at 55 ns
+VP7 p7 0 pwl(0 1.8 55n 1.8 55.1n 0)
+VN7 n7 0 0
+* bit 6: to GND at 55 ns, then to Vref at 100 ns
+VP6 p6 0 pwl(0 1.8 100n 1.8 100.1n 0)
+VN6 n6 0 pwl(0 0 55n 0 55.1n 1.8 100n 1.8 100.1n 0)
+* bits 0-5 and dummy: to GND at 55 ns
+Vpo po 0 1.8
+Vno no 0 pwl(0 0 55n 0 55.1n 1.8)
+XS7 b7 vin vref p7 n7 s sb VDD 0 bsw Wn=8 Wp=16
+XS6 b6 vin vref p6 n6 s sb VDD 0 bsw Wn=4 Wp=8
+XS5 b5 vin vref po no s sb VDD 0 bsw Wn=2 Wp=4
+XS4 b4 vin vref po no s sb VDD 0 bsw Wn=1 Wp=2
+XS3 b3 vin vref po no s sb VDD 0 bsw Wn=0.5 Wp=1
+XS2 b2 vin vref po no s sb VDD 0 bsw Wn=0.5 Wp=1
+XS1 b1 vin vref po no s sb VDD 0 bsw Wn=0.5 Wp=1
+XS0 b0 vin vref po no s sb VDD 0 bsw Wn=0.5 Wp=1
+XSd bd vin vref po no s sb VDD 0 bsw Wn=0.5 Wp=1
+Xdac top b0 b1 b2 b3 b4 b5 b6 b7 bd cdac
+.control
+tran 20p 150n
+meas tran vsamp find v(top) at=48n
+meas tran vhold find v(top) at=52n
+let inj_mv = (vhold-vsamp)*1000
+print inj_mv
+meas tran t1 when v(top)=1.2965 rise=1 td=52n
+let settle1_ns = (t1-55e-9)*1e9
+meas tran vf1 find v(top) at=95n
+let err1_mv = (vf1-1.3)*1000
+print settle1_ns err1_mv
+meas tran t2 when v(top)=1.7465 rise=1 td=100n
+let settle2_ns = (t2-100e-9)*1e9
+meas tran vf2 find v(top) at=145n
+let err2_mv = (vf2-1.75)*1000
+print settle2_ns err2_mv
+.endc
+.end
