@@ -1,0 +1,7 @@
+* unit switch cell (reference for LVS)
+.subckt bsw_unit b vin vref p n s sb VDD GND
+XMs1 b s  vin  GND sky130_fd_pr__nfet_01v8 L=0.15 W=0.5 nf=1
+XMs2 b sb vin  VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1
+XMp  b p  vref VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1
+XMn  b n  GND  GND sky130_fd_pr__nfet_01v8 L=0.15 W=0.5 nf=1
+.ends
