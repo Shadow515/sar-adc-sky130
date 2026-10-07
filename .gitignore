@@ -8,3 +8,7 @@ cdac/mc_run/
 cdac/run.spice
 sar_logic/runs/
 sar_logic/sim
+adc/conv.txt
+adc/run*.spice
+adc/*.so
+adc/sar_top_obj_dir/

@@ -1,0 +1,50 @@
+* Full 8-bit SAR ADC: transistor-level analog + Verilog SAR logic
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ../cdac/cdac.spice
+.include ../cdac/bsw.spice
+.include ../comparator/comp.spice
+VDD VDD 0 1.8
+Vref vref 0 1.8
+Vcm vcm 0 0.9
+Vin vin 0 VINVAL
+Vclk clk_a 0 pulse(0 1.8 0 100p 100p 19.9n 40n)
+Vrst rst_a 0 pwl(0 0 100n 0 100.1n 1.8)
+* analog -> digital
+abin [clk_a rst_a outp] [clk rst_n cmp] adcb
+.model adcb adc_bridge(in_low=0.7 in_high=1.1)
+* the SAR logic (your Verilog)
+adut [clk rst_n cmp] [st s stb sb cclk p7 p6 p5 p4 p3 p2 p1 p0 n7 n6 n5 n4 n3 n2 n1 n0 pd nd d7 d6 d5 d4 d3 d2 d1 d0 eoc] null dut
+.model dut d_cosim simulation="./sar_top.so"
+* digital -> analog
+about [st s stb sb cclk p7 p6 p5 p4 p3 p2 p1 p0 n7 n6 n5 n4 n3 n2 n1 n0 pd nd d7 d6 d5 d4 d3 d2 d1 d0 eoc] [st_a s_a stb_a sb_a cclk_a p7_a p6_a p5_a p4_a p3_a p2_a p1_a p0_a n7_a n6_a n5_a n4_a n3_a n2_a n1_a n0_a pd_a nd_a d7_a d6_a d5_a d4_a d3_a d2_a d1_a d0_a eoc_a] dacb
+.model dacb dac_bridge(out_low=0 out_high=1.8 t_rise=200p t_fall=200p)
+* top-plate sampling switch
+XMt1 top st_a  vcm 0   sky130_fd_pr__nfet_01v8 L=0.15 W=4 nf=1
+XMt2 top stb_a vcm VDD sky130_fd_pr__pfet_01v8 L=0.15 W=8 nf=1
+* bottom-plate switches
+XS7 b7 vin vref p7_a n7_a s_a sb_a VDD 0 bsw Wn=8 Wp=16
+XS6 b6 vin vref p6_a n6_a s_a sb_a VDD 0 bsw Wn=4 Wp=8
+XS5 b5 vin vref p5_a n5_a s_a sb_a VDD 0 bsw Wn=2 Wp=4
+XS4 b4 vin vref p4_a n4_a s_a sb_a VDD 0 bsw Wn=1 Wp=2
+XS3 b3 vin vref p3_a n3_a s_a sb_a VDD 0 bsw Wn=0.5 Wp=1
+XS2 b2 vin vref p2_a n2_a s_a sb_a VDD 0 bsw Wn=0.5 Wp=1
+XS1 b1 vin vref p1_a n1_a s_a sb_a VDD 0 bsw Wn=0.5 Wp=1
+XS0 b0 vin vref p0_a n0_a s_a sb_a VDD 0 bsw Wn=0.5 Wp=1
+XSd bd vin vref pd_a nd_a s_a sb_a VDD 0 bsw Wn=0.5 Wp=1
+* capacitor DAC
+Xdac top b0 b1 b2 b3 b4 b5 b6 b7 bd cdac
+* comparator: top plate vs Vcm
+Xcomp cclk_a top refn outp outn VDD 0 comp
+Cp outp 0 5f
+Cn outn 0 5f
+* matched dummy side for inn (equal capacitance + equal switch)
+XMt3 refn st_a  vcm 0   sky130_fd_pr__nfet_01v8 L=0.15 W=4 nf=1
+XMt4 refn stb_a vcm VDD sky130_fd_pr__pfet_01v8 L=0.15 W=8 nf=1
+Xdacn refn 0 0 0 0 0 0 0 0 0 cdac
+.control
+tran 0.1n 2.1u
+let code = (128*v(d7_a) + 64*v(d6_a) + 32*v(d5_a) + 16*v(d4_a) + 8*v(d3_a) + 4*v(d2_a) + 2*v(d1_a) + v(d0_a)) / 1.8
+meas tran code1 find code when v(eoc_a)=0.9 fall=1
+meas tran code2 find code when v(eoc_a)=0.9 fall=2
+.endc
+.end
