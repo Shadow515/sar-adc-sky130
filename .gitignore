@@ -12,3 +12,7 @@ adc/conv.txt
 adc/run*.spice
 adc/*.so
 adc/sar_top_obj_dir/
+top/*.ext
+top/extract.log
+top/netgen.log
+top/sky130_fd_sc_hd__*.ext

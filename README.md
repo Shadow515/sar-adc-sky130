@@ -69,3 +69,10 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 | 16-point mid-code sweep (tt) | error 0 LSB (lower half), +1 LSB (upper half), average +0.5 LSB |
 
 ![ADC conversion waveform](images/adc_conversion.png)
+
+## Full chip (adc_top): DRC and LVS clean
+All blocks assembled and routed: 256-cap common-centroid CDAC with 35 switch cells, symmetric StrongARM comparator,
+analog front-end (top-plate switch + kickback-matching dummy), and LibreLane-built SAR logic.
+Full-chip Magic DRC: 0 errors. Netgen LVS (analog transistors + digital standard cells): circuits match uniquely.
+
+![Full chip layout](images/adc_top.png)

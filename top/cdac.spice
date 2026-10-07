@@ -1,0 +1,12 @@
+* 8-bit binary-weighted CDAC, unit = 2x2um MIM cap
+.subckt cdac top b0 b1 b2 b3 b4 b5 b6 b7 bd
+XCd top bd sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=1
+XC0 top b0 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=1
+XC1 top b1 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=2
+XC2 top b2 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=4
+XC3 top b3 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=8
+XC4 top b4 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=16
+XC5 top b5 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=32
+XC6 top b6 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=64
+XC7 top b7 sky130_fd_pr__cap_mim_m3_1 W=2 L=2 MF=1 m=128
+.ends
