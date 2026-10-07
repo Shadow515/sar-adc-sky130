@@ -6,7 +6,7 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 - [x] CMOS inverter: schematic, simulation, layout, DRC clean, LVS clean
 - [x] Comparator: design, corners, Monte Carlo offset, layout, DRC and LVS clean
 - [x] Capacitor DAC: 256 MIM caps + 35 switch cells, mismatch MC, settling, layout, DRC and LVS clean
-- [ ] SAR logic (Verilog)
+- [x] SAR logic: Verilog FSM, 2000-run test 0 errors, RTL-to-GDS with LibreLane, DRC/LVS/timing clean
 - [ ] Top-level integration
 
 ## Inverter results (tt corner, 1.8 V)
@@ -50,3 +50,13 @@ Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen 
 | Mismatch (30-run Monte Carlo) | avg worst DNL 0.25 LSB, max 0.62 LSB, no missing codes |
 | Switch settling | ~1 ns to 1/2 LSB, step error < 0.25 LSB |
 | Layout | 256 caps common-centroid + 35 unit switch cells, DRC and LVS clean |
+
+## SAR logic (Verilog, LibreLane RTL-to-GDS, sky130_fd_sc_hd)
+| Spec | Result |
+|---|---|
+| Functional test | 2000 random conversions, 0 errors |
+| Conversion | 23 cycles -> 1.09 MS/s at 25 MHz |
+| Setup / hold slack @ 25 MHz | +28.2 ns / +0.12 ns |
+| DRC (router, Magic, KLayout) / LVS / antenna | 0 / 0 / 0 / 0 / 0 |
+
+![SAR logic layout](images/sar_logic.png)

@@ -6,3 +6,5 @@ comparator/mc_run/
 comparator/run.spice
 cdac/mc_run/
 cdac/run.spice
+sar_logic/runs/
+sar_logic/sim
