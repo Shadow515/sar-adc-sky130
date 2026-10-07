@@ -1,0 +1,8 @@
+* analog front end: top-plate switch, dummy switch, dummy capacitor
+.subckt afe top refn vcm st stb VDD GND
+XMt1 top  st  vcm GND sky130_fd_pr__nfet_01v8 L=0.15 W=4 nf=1
+XMt2 top  stb vcm VDD sky130_fd_pr__pfet_01v8 L=0.15 W=8 nf=1
+XMt3 refn st  vcm GND sky130_fd_pr__nfet_01v8 L=0.15 W=4 nf=1
+XMt4 refn stb vcm VDD sky130_fd_pr__pfet_01v8 L=0.15 W=8 nf=1
+XCd  refn GND sky130_fd_pr__cap_mim_m3_1 W=30 L=30 MF=1 m=1
+.ends
