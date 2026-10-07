@@ -1,6 +1,6 @@
 import pya, os, glob
 lyp = glob.glob("/foss/pdks/sky130A/libs.tech/klayout/**/*.lyp", recursive=True)
-for name in ["inverter", "comp", "cdac_array"]:
+for name in ["adc_top"]:
     gds = "/foss/designs/images/%s.gds" % name
     if not os.path.exists(gds):
         print("missing", gds); continue

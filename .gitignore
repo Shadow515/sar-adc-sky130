@@ -16,3 +16,23 @@ top/*.ext
 top/extract.log
 top/netgen.log
 top/sky130_fd_sc_hd__*.ext
+# generated / scratch / duplicates
+*_layout.spice
+*.ext
+run.spice
+*.log
+top/route_top.tcl
+top/probe.tcl
+top/pinchk.tcl
+top/cdac.spice
+top/cdac_full.spice
+top/bsw_unit.spice
+cdac/unit.tcl
+cdac/capunit.mag
+comparator/mc_results.txt
+inverter/inverter.spice
+inverter/inverter_pex.spice
+inverter/inv_lvs.spice
+images/*.gds
+adc/plot_tb.spice
+adc/sar_logic.v

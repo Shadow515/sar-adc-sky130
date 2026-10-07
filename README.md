@@ -1,78 +1,57 @@
-# 8-bit SAR ADC in SkyWater 130nm (open-source flow)
+# 8-bit SAR ADC in SkyWater 130 nm (fully open-source flow)
 
-Full ASIC design flow for an 8-bit SAR ADC using xschem, ngspice, Magic, netgen and OpenLane on the sky130 PDK.
+A complete 8-bit successive-approximation (SAR) ADC, designed from transistor level to a DRC- and LVS-clean
+full-chip layout, using only open-source tools on the SkyWater sky130 PDK.
 
-## Progress
-- [x] CMOS inverter: schematic, simulation, layout, DRC clean, LVS clean
-- [x] Comparator: design, corners, Monte Carlo offset, layout, DRC and LVS clean
-- [x] Capacitor DAC: 256 MIM caps + 35 switch cells, mismatch MC, settling, layout, DRC and LVS clean
-- [x] SAR logic: Verilog FSM, 2000-run test 0 errors, RTL-to-GDS with LibreLane, DRC/LVS/timing clean
-- [x] Top-level integration (simulation): full ADC converts, error <= 1 LSB
+**Status:** full chip assembled. Full-chip DRC: 0 errors. Full-chip LVS (analog + digital): circuits match.
 
-## Inverter results (tt corner, 1.8 V)
-| Load | tpHL | tpLH | tpd |
-|---|---|---|---|
-| none | 20.0 ps | 24.7 ps | 22.4 ps |
-| 10 fF | 51.8 ps | 62.7 ps | 57.3 ps |
-| 50 fF | 136.6 ps | 180.8 ps | 158.7 ps |
+![Full chip layout](images/adc_top.png)
 
-## Inverter post-layout (extracted with Magic, tt, 1.8 V)
-| Load | Schematic tpd | Post-layout tpd |
-|---|---|---|
-| none | 22.4 ps | 26.8 ps |
-| 10 fF | 57.3 ps | 55.9 ps |
-| 50 fF | 158.7 ps | 144.3 ps |
-
-## Comparator (StrongARM latch, tt, 1.8 V)
-| Spec | Result |
+## Architecture
+| Block | Design |
 |---|---|
-| Resolution | 1 mV, all 15 corners (-40 to 125 C) |
-| Offset sigma (30-run Monte Carlo) | 2.9 mV (11.8 mV before resizing input pair) |
-| Delay | 0.25 - 0.53 ns |
-| Power @ 100 MHz | 15.5 uW |
-| Layout | Symmetric, DRC clean, LVS clean |
+| Capacitor DAC | 8-bit binary-weighted, 256 unit MIM caps (2x2 um, ~2 pF total), bottom-plate sampling, common-centroid layout |
+| Switches | 35 copies of one unit switch cell (vin / vref / GND), sized in proportion to each bit's capacitance |
+| Comparator | StrongARM latch, 11 transistors, mirror-symmetric layout |
+| Analog front end | Top-plate sampling switch + matched dummy switch and capacitor on the comparator's other input (kickback cancellation) |
+| SAR logic | Verilog FSM, synthesized and placed-and-routed with LibreLane (sky130_fd_sc_hd) |
 
-## Layouts (sky130, DRC and LVS clean)
+Conversion: 23 clock cycles, 1.09 MS/s at a 25 MHz clock, 1.8 V supply, 0-1.8 V input range.
 
-### CMOS inverter
-![Inverter layout](images/inverter.png)
-
-### StrongARM comparator
-![Comparator layout](images/comp.png)
-
-### 8-bit CDAC capacitor array (256 unit MIM caps, common-centroid)
-![CDAC array layout](images/cdac_array.png)
-
-## Capacitor DAC (8-bit, binary-weighted, 2x2 um MIM unit caps)
-| Spec | Result |
+## Results
+| Block | Key results |
 |---|---|
-| Bit weights | exact binary, 7.03 mV / LSB at 1.8 V |
-| Mismatch (30-run Monte Carlo) | avg worst DNL 0.25 LSB, max 0.62 LSB, no missing codes |
-| Switch settling | ~1 ns to 1/2 LSB, step error < 0.25 LSB |
-| Layout | 256 caps common-centroid + 35 unit switch cells, DRC and LVS clean |
-
-## SAR logic (Verilog, LibreLane RTL-to-GDS, sky130_fd_sc_hd)
-| Spec | Result |
-|---|---|
-| Functional test | 2000 random conversions, 0 errors |
-| Conversion | 23 cycles -> 1.09 MS/s at 25 MHz |
-| Setup / hold slack @ 25 MHz | +28.2 ns / +0.12 ns |
-| DRC (router, Magic, KLayout) / LVS / antenna | 0 / 0 / 0 / 0 / 0 |
-
-![SAR logic layout](images/sar_logic.png)
-
-## Full ADC (transistor-level analog + Verilog SAR logic, mixed-signal ngspice/Verilator)
-| Test | Result |
-|---|---|
-| End-to-end conversion | CDAC + switches + StrongARM comparator + RTL SAR logic, 23 cycles, 1.09 MS/s |
-| Kickback fix | Matched dummy capacitor + switch on comparator inn: offset reduced from +2 LSB to <= 1 LSB |
-| 16-point mid-code sweep (tt) | error 0 LSB (lower half), +1 LSB (upper half), average +0.5 LSB |
+| Comparator | Resolves 1 mV in all 15 corners (ss/tt/ff/sf/fs, -40 to 125 C). Offset sigma 2.9 mV (30-run Monte Carlo), down from 11.8 mV by resizing the input pair using Pelgrom's law. Delay 0.25-0.53 ns, 15.5 uW at 100 MHz |
+| CDAC | Exact binary weights (7.03 mV/LSB). Mismatch Monte Carlo (30 runs): average worst DNL 0.25 LSB, max 0.62 LSB, no missing codes. Switch settling ~1 ns, step error < 0.25 LSB |
+| SAR logic | 2000 random conversions, 0 errors. Setup slack +27.4 ns, hold +0.12 ns at 25 MHz. DRC / LVS / antenna: 0 / 0 / 0 |
+| Full ADC (simulation) | Mixed-signal ngspice + Verilator: transistor-level analog with the real Verilog SAR logic. Comparator kickback found and fixed (offset +2 LSB to <= 1 LSB). 16-point sweep: average error +0.5 LSB |
+| Full chip | Magic DRC 0 errors. Netgen LVS: circuits match uniquely |
 
 ![ADC conversion waveform](images/adc_conversion.png)
 
-## Full chip (adc_top): DRC and LVS clean
-All blocks assembled and routed: 256-cap common-centroid CDAC with 35 switch cells, symmetric StrongARM comparator,
-analog front-end (top-plate switch + kickback-matching dummy), and LibreLane-built SAR logic.
-Full-chip Magic DRC: 0 errors. Netgen LVS (analog transistors + digital standard cells): circuits match uniquely.
+## Layouts
+| Comparator | CDAC array | SAR logic |
+|---|---|---|
+| ![](images/comp.png) | ![](images/cdac_array.png) | ![](images/sar_logic.png) |
 
-![Full chip layout](images/adc_top.png)
+## Repository structure
+| Folder | Contents |
+|---|---|
+| `inverter/` | First block used to learn the flow: schematic, simulation, layout, LVS, post-layout extraction |
+| `comparator/` | Netlist, testbenches (corners, Monte Carlo), layout scripts, layout, LVS report |
+| `cdac/` | CDAC + switch netlists, testbenches (bit weights, mismatch, settling), array and switch layout scripts, LVS reports |
+| `sar_logic/` | Verilog, testbench, LibreLane config and pin order, final GDS / LEF / DEF / gate-level netlist |
+| `adc/` | Full-ADC mixed-signal simulation (testbenches, sweep, waveform plot) |
+| `top/` | Analog front end, full-chip placement and routing scripts, final `adc_top.gds`, full-chip LVS |
+| `images/` | Layout and waveform pictures |
+
+## Tools
+xschem, ngspice, Magic, netgen, KLayout, Icarus Verilog, Verilator, LibreLane (Yosys + OpenROAD), all run
+from the IIC-OSIC-TOOLS container on a Raspberry Pi 5.
+
+## Notes and next steps
+- Simulations are at the typical corner unless stated. Full-ADC corner runs and an ENOB measurement from a sine test are planned.
+- The dummy capacitor is 30x30 um (the generator's maximum), about 88% of the CDAC area. Close enough for kickback balancing.
+
+## Author
+Tharun Kiruthik S.B, MSc Microelectronics Systems and Devices, Newcastle University

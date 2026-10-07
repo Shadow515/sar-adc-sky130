@@ -1,6 +1,0 @@
-** sch_path: /foss/designs/inverter/inv_lvs.sch
-.subckt inv_lvs in out VDD GND
-*.PININFO in:I out:O VDD:B GND:B
-XM1 out in GND GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1
-XM2 out in VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1
-.ends
