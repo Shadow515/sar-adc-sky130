@@ -25,9 +25,12 @@ Conversion: 23 clock cycles, 1.09 MS/s at a 25 MHz clock, 1.8 V supply, 0-1.8 V 
 | CDAC | Exact binary weights (7.03 mV/LSB). Mismatch Monte Carlo (30 runs): average worst DNL 0.25 LSB, max 0.62 LSB, no missing codes. Switch settling ~1 ns, step error < 0.25 LSB |
 | SAR logic | 2000 random conversions, 0 errors. Setup slack +27.4 ns, hold +0.12 ns at 25 MHz. DRC / LVS / antenna: 0 / 0 / 0 |
 | Full ADC (simulation) | Mixed-signal ngspice + Verilator: transistor-level analog with the real Verilog SAR logic. Comparator kickback found and fixed (offset +2 LSB to <= 1 LSB). 16-point sweep: average error +0.5 LSB |
+| Sine test (ENOB) | 64-point coherent sine (7 cycles, 94% full scale), typical corner, noise-free: SINAD 50.7 dB, ENOB 8.1 bits, matching an ideal 8-bit quantizer. All codes within 1 LSB |
 | Full chip | Magic DRC 0 errors. Netgen LVS: circuits match uniquely |
 
 ![ADC conversion waveform](images/adc_conversion.png)
+
+![ENOB sine test](images/adc_enob.png)
 
 ## Layouts
 | Comparator | CDAC array | SAR logic |
@@ -50,7 +53,7 @@ xschem, ngspice, Magic, netgen, KLayout, Icarus Verilog, Verilator, LibreLane (Y
 from the IIC-OSIC-TOOLS container on a Raspberry Pi 5.
 
 ## Notes and next steps
-- Simulations are at the typical corner unless stated. Full-ADC corner runs and an ENOB measurement from a sine test are planned.
+- Simulations are at the typical corner unless stated. Full-ADC corner runs and a noise-enabled ENOB measurement are planned.
 - The dummy capacitor is 30x30 um (the generator's maximum), about 88% of the CDAC area. Close enough for kickback balancing.
 
 ## Author
